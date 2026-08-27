@@ -5,9 +5,13 @@
 \usepackage[brazilian]{babel}
 \usepackage{cite}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{tabularx}
 \usepackage{url}
 \usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
 \graphicspath{{figures/}}
 \renewcommand{\abstractname}{Resumo}
@@ -28,7 +32,7 @@ edson.silva@mtel.inatel.br}}
 \maketitle
 
 \begin{abstract}
-A agricultura de precisão tem se destacado como uma importante estratégia para aumentar a eficiência no uso dos recursos hídricos e melhorar a produtividade agrícola. Nesse contexto, as Redes de Sensores Sem Fio (RSSF/WSN) possibilitam o monitoramento contínuo de variáveis ambientais e da umidade do solo por meio de sensores distribuídos em campo e interligados por tecnologias de comunicação sem fio. Este trabalho apresenta uma abordagem sobre a aplicação de RSSF no monitoramento da umidade do solo, abrangendo os principais conceitos relacionados às redes de sensores, os tipos de sensores empregados, como FDR, TDR e RFID, e as tecnologias de comunicação ZigBee, Bluetooth Low Energy e LoRaWAN. Além disso, são discutidas as características, vantagens e desafios da utilização dessas tecnologias em sistemas de agricultura de precisão. Os resultados demonstram que a adoção de RSSF contribui para o gerenciamento eficiente da irrigação e para a redução do desperdício de água.
+A agricultura de precisão tem se destacado como uma importante estratégia para aumentar a eficiência no uso dos recursos hídricos e melhorar a produtividade agrícola. Nesse contexto, as redes de sensores sem fio (RSSF) possibilitam o monitoramento contínuo de variáveis ambientais e da umidade do solo por meio de sensores distribuídos em campo e interligados por tecnologias de comunicação sem fio. Este trabalho aborda a aplicação de RSSF no monitoramento da umidade do solo, abrangendo os principais conceitos relacionados às redes de sensores, os sensores baseados em reflectometria no domínio da frequência (FDR), reflectometria no domínio do tempo (TDR) e identificação por radiofrequência (RFID), além das tecnologias de comunicação ZigBee, Bluetooth Low Energy e LoRaWAN. Também são discutidas as características, vantagens e limitações dessas tecnologias em sistemas de agricultura de precisão. A análise indica que a adoção de RSSF pode contribuir para o gerenciamento eficiente da irrigação e para a redução do desperdício de água.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -39,13 +43,15 @@ agricultura de precisão, Internet das Coisas, LoRaWAN, monitoramento inteligent
 
 Nas últimas décadas, a utilização de água na agricultura tornou-se objeto de preocupação para a Organização das Nações Unidas para a Alimentação e a Agricultura (FAO). Carlesso \emph{et al.} estimaram em torno de 300 milhões de hectares de áreas irrigadas \cite{carlesso2009}. Estudos apontam que a agricultura consome aproximadamente 70\% da água disponível mundialmente para a produção agrícola \cite{hardie2020}.
 
-As tendências de escassez hídrica indicam que, até 2030, pode ocorrer um aumento de até 2.000\% em relação aos últimos 100 anos, constituindo um cenário que demanda o gerenciamento eficiente dos recursos \cite{silva2024}.
+As projeções indicam que, até 2030, a demanda de água no Brasil poderá apresentar um aumento de até 2.000\% em relação aos últimos 100 anos, constituindo um cenário que demanda o gerenciamento eficiente dos recursos hídricos \cite{silva2024}.
 
 Nessa conjuntura, métricas e sistemas de monitoramento inteligente oferecem formas eficazes de acompanhar e controlar a umidade do solo. Uma irrigação precisa permite aplicar a quantidade de água adequada a determinada área, evitando desperdícios e mantendo condições propícias ao plantio \cite{silva2024}.
 
 As redes de sensores sem fio vêm se consolidando ao longo dos anos. Seu objetivo é reunir um grande conjunto de nós sensores capazes de se interconectar e formar uma malha inteligente \cite{gta2002}.
 
 Considerando que a escassez de água pode se tornar um problema em um futuro próximo e que a agricultura depende desse recurso, as redes de sensores sem fio aplicadas ao monitoramento da umidade do solo contribuem para a otimização do uso da água e para o gerenciamento das condições do solo.
+
+O objetivo deste trabalho consiste em apresentar os principais conceitos relacionados às Redes de Sensores Sem Fio aplicadas à agricultura de precisão, descrevendo os sensores utilizados no monitoramento da umidade do solo, as tecnologias de comunicação disponíveis e uma proposta de implementação baseada em LoRaWAN para aplicações agrícolas.
 
 \section{Fundamentação Teórica}
 
@@ -129,10 +135,103 @@ Centenaro \emph{et al.} destacam a rede LoRa como uma tecnologia LPWAN (\emph{Lo
 
 Em aplicações agrícolas que envolvem grandes áreas de cultivo, o LoRaWAN torna-se uma alternativa interessante. Essa tecnologia pertence à categoria LPWAN, caracterizada por longas distâncias de comunicação e baixo consumo energético. Ao contrário das redes em malha, o LoRaWAN utiliza uma topologia em estrela, na qual os nós sensores enviam as medições diretamente ao \emph{gateway}. Essa organização reduz a complexidade da rede e facilita a implementação de sistemas de monitoramento da umidade do solo, da temperatura e das condições ambientais em propriedades rurais extensas \cite{centenaro2016}.
 
+\section{Implementação de uma RSSF para monitoramento da umidade do solo}
+
+\subsection{Nós sensores e comunicação}
+
+Com base nas arquiteturas propostas por Ojha \emph{et al.} \cite{ojha2015} e Centenaro \emph{et al.} \cite{centenaro2016}, uma RSSF para monitoramento da umidade do solo pode ser composta por nós sensores distribuídos em uma área agrícola, responsáveis pela coleta das informações ambientais. Os dados são transmitidos por meio do protocolo LoRaWAN para um \emph{gateway} central, que encaminha as informações para uma plataforma em nuvem, onde podem ser visualizadas por produtores rurais e utilizadas em sistemas de apoio à decisão.
+
+A comunicação entre os nós sensores e o \emph{gateway} pode ser realizada por meio da tecnologia LoRaWAN. Essa tecnologia pertence à categoria LPWAN (\emph{Low-Power Wide-Area Network}), caracterizada pelo baixo consumo de energia e pela capacidade de transmissão em longas distâncias. Em aplicações agrícolas, sua utilização é especialmente vantajosa devido à necessidade de comunicação em áreas extensas, onde soluções tradicionais podem apresentar limitações de alcance. Além disso, o baixo consumo energético contribui para o aumento da autonomia dos nós sensores alimentados por baterias ou sistemas fotovoltaicos \cite{centenaro2016}.
+
+\subsection{\emph{Gateway}}
+
+O \emph{gateway} atua como ponto intermediário entre os dispositivos de campo e a infraestrutura de armazenamento de dados. Sua principal função consiste em receber as informações transmitidas pelos nós sensores e encaminhá-las para a Internet por meio de redes cabeadas ou sem fio. Dessa forma, o \emph{gateway} possibilita a centralização das informações coletadas em diferentes regiões da propriedade agrícola, permitindo o gerenciamento integrado dos dados de monitoramento \cite{ojha2015,centenaro2016}.
+
+\subsection{Servidor ou nuvem}
+
+A utilização de plataformas em nuvem permite armazenar, organizar e disponibilizar os dados coletados pelos sensores de forma centralizada. Além do armazenamento histórico das informações, a computação em nuvem possibilita a execução de rotinas de análise, geração de relatórios e integração com sistemas de apoio à decisão. Dessa forma, produtores rurais podem acessar os dados remotamente e acompanhar as condições da área cultivada em tempo real \cite{ojha2015}.
+
+\subsection{Smartphone e computador}
+
+Smartphones e computadores são dispositivos utilizados para acessar os dados armazenados em servidores ou plataformas em nuvem, permitindo que o usuário acompanhe remotamente as condições de umidade do solo \cite{ojha2015}.
+
+Conforme ilustrado na Fig.~\ref{fig:solution}, os sensores FDR realizam a coleta da umidade do solo e encaminham os dados para um microcontrolador responsável pelo processamento inicial das informações. Posteriormente, os dados são transmitidos por meio da tecnologia LoRaWAN até um \emph{gateway} central. Em seguida, o \emph{gateway} envia as informações para uma plataforma em nuvem, onde os dados ficam armazenados para consultas futuras. Por fim, os usuários podem acessar as informações por meio de um painel \emph{web}, permitindo o monitoramento remoto das condições da lavoura.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\columnwidth]{image5.png}
+  \caption{Solução proposta para implementação. Fonte: elaborado pelo autor.}
+  \label{fig:solution}
+\end{figure}
+
+\section{Comparativo dos sensores}
+
+Ao analisar as capacidades dos sensores, observa-se que os dispositivos TDR apresentam maior precisão quando comparados aos sensores FDR e RFID, sendo indicados para aplicações que exigem maior confiabilidade e fidelidade dos parâmetros obtidos. Os sensores FDR, embora apresentem precisão inferior à dos sensores TDR, possuem menor custo e, por isso, tornam-se mais atrativos para implementações em larga escala. Por fim, os sensores baseados em RFID destacam-se pelo baixo custo e pela possibilidade de operar sem bateria; contudo, apresentam alcance limitado. A Tabela~\ref{tab:sensores-umidade} sintetiza essas características \cite{hardie2020}.
+
+\begin{table}[!t]
+  \caption{Comparação entre sensores de umidade do solo. Fonte: elaborado com base em \cite{hardie2020}.}
+  \label{tab:sensores-umidade}
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabularx}{\columnwidth}{|c|Y|Y|Y|}
+    \hline
+    \textbf{Sensor} & \textbf{Princípio de funcionamento} & \textbf{Vantagens} & \textbf{Desvantagens} \\
+    \hline
+    FDR & Constante dielétrica & Baixo custo & Exige calibração \\
+    \hline
+    TDR & Pulsos eletromagnéticos & Alta precisão & Custo elevado \\
+    \hline
+    RFID & Etiquetas passivas & Sem bateria & Baixo alcance \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\section{Vantagens e desafios das RSSF na agricultura}
+
+\subsection{Vantagens}
+
+As RSSF possibilitam o monitoramento contínuo das condições ambientais e da umidade do solo, permitindo que os agricultores tomem decisões mais precisas sobre a irrigação. Além disso, a transmissão automática das informações reduz a necessidade de inspeções em campo e favorece a economia de água, especialmente em grandes áreas agrícolas. Outra vantagem é a possibilidade de integração com plataformas de IoT e sistemas de apoio à decisão, ampliando a automação das atividades agrícolas \cite{ojha2015}.
+
+\subsection{Desvantagens}
+
+Em contrapartida, a implantação de RSSF enfrenta barreiras relacionadas ao consumo energético dos nós sensores, à manutenção dos dispositivos instalados em campo e à atenuação do sinal em determinadas condições ambientais. Além disso, devem ser considerados o custo inicial de implantação e a necessidade de calibração periódica dos sensores, fatores que podem dificultar a adoção da tecnologia por pequenos produtores rurais \cite{akyildiz2002,ojha2015}.
+
+\section{Comparativo dos protocolos}
+
+Os protocolos Bluetooth e ZigBee estão entre as tecnologias pioneiras em aplicações de IoT, sendo ambos versáteis e caracterizados pelo baixo consumo de energia. Entretanto, as redes de sensores sem fio empregadas na agricultura exigem elevada autonomia e ampla cobertura de comunicação, características oferecidas pelo LoRaWAN. Portanto, considerando as grandes extensões das áreas agrícolas e as longas distâncias envolvidas no monitoramento, o LoRaWAN apresenta vantagens em relação ao Bluetooth e ao ZigBee. A Tabela~\ref{tab:protocolos-comunicacao} resume a comparação entre essas tecnologias \cite{centenaro2016}.
+
+\begin{table}[H]
+  \caption{Comparação entre tecnologias de comunicação sem fio. Fonte: elaborado com base em \cite{centenaro2016}.}
+  \label{tab:protocolos-comunicacao}
+  \centering
+  \scriptsize
+  \renewcommand{\arraystretch}{1.15}
+  \setlength{\tabcolsep}{2pt}
+  \begin{tabularx}{\columnwidth}{|c|c|c|c|Y|}
+    \hline
+    \textbf{Protocolo} & \textbf{Alcance} & \textbf{Consumo} & \textbf{Topologia} & \textbf{Aplicação} \\
+    \hline
+    BLE & Curto & Muito baixo & Estrela & Estufas \\
+    \hline
+    ZigBee & Médio & Baixo & Malha & Agricultura de médio porte \\
+    \hline
+    LoRaWAN & Longo & Baixo & Estrela & Grandes propriedades \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+
 \section{Conclusão}
 
-ZigBee e Bluetooth Low Energy são amplamente empregados em aplicações de redes de sensores sem fio. O protocolo LoRaWAN, por sua vez, apresenta vantagens significativas para ambientes agrícolas devido ao maior alcance de comunicação, à menor necessidade de infraestrutura intermediária e ao baixo consumo energético. Essas características são essenciais para o monitoramento de grandes áreas rurais.
+Este trabalho apresentou uma análise das Redes de Sensores Sem Fio aplicadas ao monitoramento da umidade do solo em ambientes agrícolas. Foram discutidos os principais conceitos relacionados às RSSF, os sensores utilizados para medições da umidade do solo e as tecnologias de comunicação empregadas em sistemas de agricultura de precisão.
 
+Entre os sensores analisados, os dispositivos TDR apresentam elevada precisão, enquanto os sensores FDR oferecem uma alternativa economicamente mais viável para aplicações de larga escala. Em relação à comunicação, o protocolo LoRaWAN destacou-se devido ao amplo alcance de cobertura e ao baixo consumo energético, características adequadas para grandes propriedades rurais.
+
+Como perspectivas futuras, destaca-se a integração das RSSF com tecnologias de Internet das Coisas, computação em nuvem e algoritmos de Inteligência Artificial. Essas soluções poderão contribuir para a automação de sistemas de irrigação e para a otimização do uso dos recursos hídricos, promovendo uma agricultura cada vez mais eficiente e sustentável.
+
+
+\IEEEtriggeratref{3}
 \begin{thebibliography}{10}
 
 \bibitem{carlesso2009}
